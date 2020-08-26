@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Baking Time</string>
+    <string name="nointernet_error">Sorry, you need some internet connection</string>
+    <string name="http_recipes_error">Sorry, there was a problem loading the recipes</string>
+</resources>
