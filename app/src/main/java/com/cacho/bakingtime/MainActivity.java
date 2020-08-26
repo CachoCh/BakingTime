@@ -1,6 +1,8 @@
 package com.cacho.bakingtime;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -21,11 +23,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements OnTaskDoneListener {
 
     private Recipe[] mRecips;
+    private RecyclerView mRecipeRecyclerView;
+    private RecipesAdapter mRecipesAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mRecipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_rv);
+        mRecipeRecyclerView.setHasFixedSize(true);
+        mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getRecipes();
     }
@@ -38,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
             Toast.makeText(getApplicationContext(), R.string.http_recipes_error, Toast.LENGTH_LONG).show();
         }
     }
-
-
-
 
     private Boolean checkForInternet() {
         ConnectivityManager mgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -58,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
     public void onTaskDone(String responseData) {
         Gson gson = new Gson();
         Recipe[] mRecips = gson.fromJson( responseData, Recipe[].class );
+
+
+        mRecipesAdapter = new RecipesAdapter(mRecips); //
+        mRecipeRecyclerView.setAdapter(mRecipesAdapter);
     }
 
     @Override
