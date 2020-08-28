@@ -22,7 +22,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnTaskDoneListener {
 
-    private Recipe[] mRecips;
     private RecyclerView mRecipeRecyclerView;
     private RecipesAdapter mRecipesAdapter;
 
@@ -64,9 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
     public void onTaskDone(String responseData) {
         Gson gson = new Gson();
         Recipe[] mRecips = gson.fromJson( responseData, Recipe[].class );
-
-
-        mRecipesAdapter = new RecipesAdapter(mRecips); //
+        mRecipesAdapter = new RecipesAdapter(this, mRecips);
         mRecipeRecyclerView.setAdapter(mRecipesAdapter);
     }
 

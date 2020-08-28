@@ -13,10 +13,19 @@ public class Recipe {
     private String servings;
     @SerializedName("image")
     private String image;
+
     @SerializedName("ingredients")
-    List<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
     @SerializedName("steps")
-    List<Steps> steps;
+    private List<Steps> steps;
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<Steps> getSteps() {
+        return steps;
+    }
 
     public String getId() {
         return id;

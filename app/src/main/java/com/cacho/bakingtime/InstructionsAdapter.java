@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cacho.bakingtime.databinding.InstructionRowItemBinding;
 import com.cacho.bakingtime.databinding.RecipeRowItemBinding;
 import com.cacho.bakingtime.model.Recipe;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,41 +23,41 @@ https://medium.com/androiddevelopers/android-data-binding-recyclerview-db7c40d9f
 
 
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
-    protected Recipe[] mRecipeDataSet; //TODO: to generic
+public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapter.InstructionViewHolder> {
+    protected List<Recipe.Steps> mStepsDataSet; //TODO: to generic
     private Context mContext;
 
 
-    public RecipesAdapter(Context context, Recipe[] recipeDataSet) {
+    public InstructionsAdapter(Context context, List<Recipe.Steps> recipeDataSet) {
         mContext = context;
-        mRecipeDataSet = recipeDataSet;
+        mStepsDataSet = recipeDataSet;
     }
 
     // Create new views (invoked by the layout manager)
     @NonNull
     @Override
-    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InstructionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        RecipeRowItemBinding itemBinding = RecipeRowItemBinding.inflate(layoutInflater, parent, false);
-        return new RecipeViewHolder(itemBinding, mContext);
+        InstructionRowItemBinding itemBinding = InstructionRowItemBinding.inflate(layoutInflater, parent, false);
+        return new InstructionViewHolder(itemBinding, mContext);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(@NonNull RecipeViewHolder viewHolder, int position) {
-        Recipe recipe = mRecipeDataSet[position];
-        viewHolder.bind(recipe);
+    public void onBindViewHolder(@NonNull InstructionViewHolder viewHolder, int position) {
+        Recipe.Steps step = mStepsDataSet.get(position);
+        viewHolder.bind(step);
     }
 
     @Override
     public int getItemCount() {
-        return mRecipeDataSet != null ? mRecipeDataSet.length : 0;
+        return mStepsDataSet != null ? mStepsDataSet.size() : 0;
     }
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
-       private RecipeRowItemBinding binding; //auto generated binding class from recipe_row_item.xml
+    public static class InstructionViewHolder extends RecyclerView.ViewHolder {
+        private InstructionRowItemBinding binding; //auto generated binding class from instruction_row_item.xml
 
-        public RecipeViewHolder(final RecipeRowItemBinding binding, final Context context) {
+        public InstructionViewHolder(final InstructionRowItemBinding binding, final Context context) {
             super(binding.getRoot());
             this.binding = binding;
             // Define click listener for the ViewHolder's View.
@@ -63,9 +66,10 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
                 public void onClick(View v) {
                     Gson gson = new Gson();
 
-                    Intent i = new Intent(context, RecipeInstructionsActivity.class);
-                    i.putExtra("recipeObject", gson.toJson(binding.getRecipe()));
-                    context.startActivity(i);
+                    //TODO: START STEP details activity
+                   /* Intent i = new Intent(context, RecipeInstructionsActivity.class);
+                    i.putExtra("recipeObject", gson.toJson(binding.getStep()));
+                    context.startActivity(i);*/
                 }
             });
         }
@@ -73,8 +77,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
         /**
          * We will use this function to bind instance of Movie to the row
          */
-        public void bind(Recipe recipe) {
-            binding.setRecipe(recipe);
+        public void bind(Recipe.Steps step) {
+            binding.setStep(step);
             binding.executePendingBindings();
         }
 
