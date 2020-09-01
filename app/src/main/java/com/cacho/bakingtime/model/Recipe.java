@@ -65,6 +65,7 @@ public class Recipe {
     }
 
     public class Steps{
+        @SerializedName("id")
         private String id;
 
         public String getId() {

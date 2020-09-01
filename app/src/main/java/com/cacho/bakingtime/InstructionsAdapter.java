@@ -24,11 +24,12 @@ https://medium.com/androiddevelopers/android-data-binding-recyclerview-db7c40d9f
 
 
 public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapter.InstructionViewHolder> {
-    protected List<Recipe.Steps> mStepsDataSet; //TODO: to generic
+    protected List<Recipe.Steps> mStepsDataSet;
+    private int mPosition;
     private Context mContext;
 
 
-    public InstructionsAdapter(Context context, List<Recipe.Steps> recipeDataSet) {
+    public InstructionsAdapter(@NonNull Context context, @NonNull List<Recipe.Steps> recipeDataSet) {
         mContext = context;
         mStepsDataSet = recipeDataSet;
     }
@@ -39,14 +40,14 @@ public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapte
     public InstructionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         InstructionRowItemBinding itemBinding = InstructionRowItemBinding.inflate(layoutInflater, parent, false);
-        return new InstructionViewHolder(itemBinding, mContext);
+        return new InstructionViewHolder(itemBinding, mContext, mStepsDataSet);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull InstructionViewHolder viewHolder, int position) {
         Recipe.Steps step = mStepsDataSet.get(position);
-        viewHolder.bind(step);
+        viewHolder.bind(step, position);
     }
 
     @Override
@@ -57,19 +58,16 @@ public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapte
     public static class InstructionViewHolder extends RecyclerView.ViewHolder {
         private InstructionRowItemBinding binding; //auto generated binding class from instruction_row_item.xml
 
-        public InstructionViewHolder(final InstructionRowItemBinding binding, final Context context) {
+        public InstructionViewHolder(final InstructionRowItemBinding binding, final Context context, List<Recipe.Steps> mStepsDataSet) {
             super(binding.getRoot());
             this.binding = binding;
-            // Define click listener for the ViewHolder's View.
             this.binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Gson gson = new Gson();
-
-                    //TODO: START STEP details activity
-                   /* Intent i = new Intent(context, RecipeInstructionsActivity.class);
-                    i.putExtra("recipeObject", gson.toJson(binding.getStep()));
-                    context.startActivity(i);*/
+                    Intent i = new Intent(context, StepDetailActivity.class);
+                    i.putExtra("steps", new Gson().toJson(mStepsDataSet));
+                    i.putExtra("position", binding.getPosition());
+                    context.startActivity(i);
                 }
             });
         }
@@ -77,8 +75,9 @@ public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapte
         /**
          * We will use this function to bind instance of Movie to the row
          */
-        public void bind(Recipe.Steps step) {
+        public void bind(Recipe.Steps step, int position) {
             binding.setStep(step);
+            binding.setPosition(position);
             binding.executePendingBindings();
         }
 

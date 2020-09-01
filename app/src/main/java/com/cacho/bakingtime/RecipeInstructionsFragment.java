@@ -63,6 +63,7 @@ public class RecipeInstructionsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             Gson gson = new Gson();
             mRecipe = gson.fromJson(mParam1, Recipe.class);
+            mContext = getContext();
             mInstructionssAdapter = new InstructionsAdapter(mContext, mRecipe.getSteps());
         }
     }
@@ -70,12 +71,15 @@ public class RecipeInstructionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_recipe_instructions, container, false);
+        mContext = getContext();
+
         mInstructionRecyclerView = (RecyclerView) root.findViewById(R.id.instructions_rv);
         mInstructionRecyclerView.setHasFixedSize(true);
         mInstructionRecyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        mContext = root.getContext();
+
 
         if(mInstructionssAdapter != null){
             mInstructionRecyclerView.setAdapter(mInstructionssAdapter);

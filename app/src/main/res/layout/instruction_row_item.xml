@@ -8,6 +8,9 @@
         <variable
             name="step"
             type="com.cacho.bakingtime.model.Recipe.Steps" />
+        <variable
+            name="position"
+            type="Integer" />
     </data>
 
     <LinearLayout
