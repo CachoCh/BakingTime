@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Recipe {
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+public class Recipe extends BaseObservable {
     @SerializedName("id")
     private String id;
     @SerializedName("name")
@@ -23,6 +26,7 @@ public class Recipe {
         return ingredients;
     }
 
+    @Bindable
     public List<Steps> getSteps() {
         return steps;
     }
@@ -64,7 +68,8 @@ public class Recipe {
         private String ingredient;
     }
 
-    public class Steps{
+
+    public class Steps extends BaseObservable {
         @SerializedName("id")
         private String id;
 
@@ -72,14 +77,17 @@ public class Recipe {
             return id;
         }
 
+        @Bindable
         public String getShortDescription() {
             return shortDescription;
         }
 
+        @Bindable
         public String getDescription() {
             return description;
         }
 
+        @Bindable
         public String getVideoURL() {
             return videoURL;
         }
