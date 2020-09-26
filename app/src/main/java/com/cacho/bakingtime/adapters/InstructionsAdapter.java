@@ -1,4 +1,4 @@
-package com.cacho.bakingtime;
+package com.cacho.bakingtime.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cacho.bakingtime.StepDetailActivity;
 import com.cacho.bakingtime.databinding.InstructionRowItemBinding;
-import com.cacho.bakingtime.databinding.RecipeRowItemBinding;
 import com.cacho.bakingtime.model.Recipe;
 import com.google.gson.Gson;
 
@@ -73,7 +73,7 @@ public class InstructionsAdapter extends RecyclerView.Adapter<InstructionsAdapte
         }
 
         /**
-         * We will use this function to bind instance of Movie to the row
+         * We will use this function to bind instance of Recipe.Step to the row
          */
         public void bind(Recipe.Steps step, int position) {
             binding.setStep(step);

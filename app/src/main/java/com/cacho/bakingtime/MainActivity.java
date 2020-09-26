@@ -10,15 +10,10 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.cacho.bakingtime.adapters.RecipesAdapter;
 import com.cacho.bakingtime.model.Recipe;
+import com.cacho.bakingtime.utils.RecipesGetter;
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONException;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnTaskDoneListener {
 

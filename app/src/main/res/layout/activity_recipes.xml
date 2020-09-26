@@ -13,13 +13,12 @@
         android:layout_height="80dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-
         android:layout_marginTop="10dp"
-
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/border_dark"
         android:gravity="center"
+        android:onClick="launchIngredientsActivity"
         android:orientation="horizontal"
         android:text="@string/ingredients"
         android:textSize="32sp"

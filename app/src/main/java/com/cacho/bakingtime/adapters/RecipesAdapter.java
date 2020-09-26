@@ -1,4 +1,4 @@
-package com.cacho.bakingtime;
+package com.cacho.bakingtime.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cacho.bakingtime.RecipeInstructionsActivity;
 import com.cacho.bakingtime.databinding.RecipeRowItemBinding;
 import com.cacho.bakingtime.model.Recipe;
 import com.google.gson.Gson;

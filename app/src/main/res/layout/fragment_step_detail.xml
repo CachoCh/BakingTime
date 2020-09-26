@@ -8,9 +8,6 @@
             type="com.cacho.bakingtime.model.Recipe.Steps" />
     </data>
 
-
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/your_placeholder"
             android:layout_width="match_parent"

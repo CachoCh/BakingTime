@@ -17,7 +17,7 @@ public class StepDetailActivity extends AppCompatActivity {
         String stepsJson = getIntent().getStringExtra("steps");
 
         Fragment fragment = StepDetailFragment.newInstance(stepsJson, position);
-        getSupportFragmentManager().beginTransaction().add(R.id.your_placeholder, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.step_fragment_placeholder, fragment).commit();
 
     }
 }

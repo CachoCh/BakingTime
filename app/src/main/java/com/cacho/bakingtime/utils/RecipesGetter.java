@@ -1,6 +1,8 @@
-package com.cacho.bakingtime;
+package com.cacho.bakingtime.utils;
 
 import android.os.AsyncTask;
+
+import com.cacho.bakingtime.OnTaskDoneListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;

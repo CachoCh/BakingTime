@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cacho.bakingtime.adapters.InstructionsAdapter;
 import com.cacho.bakingtime.model.Recipe;
 import com.google.gson.Gson;
 
