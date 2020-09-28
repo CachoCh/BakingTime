@@ -8,10 +8,12 @@
         <variable
             name="ingredient"
             type="com.cacho.bakingtime.model.Recipe.Ingredient" />
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
+
         android:layout_height="80dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -21,13 +23,67 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/instruction_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="32sp"
-            android:text="@{ingredient.ingredient}" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ingredient_cv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:background="@drawable/border"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/icon_iv"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/quantity_tv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/quantity_tv"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{ingredient.quantity}"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/measure_tv"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{ingredient.measure}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/icon_iv"
+                    app:layout_constraintStart_toStartOf="@+id/icon_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/icon_iv" />
+
+                <TextView
+                    android:id="@+id/ingredient_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="@{ingredient.ingredient}"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/icon_iv"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+
 
     </LinearLayout>
 </layout>

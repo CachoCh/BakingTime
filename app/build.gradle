@@ -27,6 +27,7 @@ android {
 
     buildFeatures.dataBinding = true
     buildFeatures.viewBinding = true
+    android.defaultConfig.vectorDrawables.useSupportLibrary = true
 }
 
 dependencies {
@@ -44,4 +45,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer
     implementation'com.google.android.exoplayer:exoplayer:2.10.8'
+
+    implementation "androidx.cardview:cardview:1.0.0"
+
+
 }
