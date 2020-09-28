@@ -26,7 +26,7 @@ public class RecipeInstructionsActivity extends AppCompatActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment fragment = RecipeInstructionsFragment.newInstance(gson.toJson(mRecipe));
-        ft.replace(R.id.recipe_instructions_frag, fragment);
+        ft.replace(R.id.recipe_instructions_placeholder, fragment);
         ft.commit();
 
 
@@ -35,6 +35,7 @@ public class RecipeInstructionsActivity extends AppCompatActivity {
     public void launchIngredientsActivity (View view){
         Intent i = new Intent(getApplicationContext(), IngredientsActivity.class);
         i.putExtra("ingredientsObject", new Gson().toJson(mRecipe.getIngredients()));
+        i.putExtra("stepsJson", new Gson().toJson(mRecipe.getSteps()));
         this.startActivity(i);
     }
 }

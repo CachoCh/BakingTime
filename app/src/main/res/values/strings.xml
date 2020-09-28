@@ -10,4 +10,5 @@
     <string name="ingredients">Ingredients</string>
     <string name="next_step">NEXT STEP</string>
     <string name="prev_step">PREVIOUS STEP</string>
+    <string name="start_cooking">Start cooking!</string>
 </resources>
