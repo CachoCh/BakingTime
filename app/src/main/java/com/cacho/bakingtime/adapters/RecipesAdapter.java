@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cacho.bakingtime.R;
 import com.cacho.bakingtime.RecipeInstructionsActivity;
 import com.cacho.bakingtime.databinding.RecipeRowItemBinding;
 import com.cacho.bakingtime.model.Recipe;
@@ -75,6 +76,22 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
          * We will use this function to bind instance of Movie to the row
          */
         public void bind(Recipe recipe) {
+            switch (recipe.getName()) {
+                case "Brownies":
+                    binding.recipeIv.setBackgroundResource(R.drawable.ic_brownie);
+                    break;
+                case "Yellow Cake":
+                    binding.recipeIv.setBackgroundResource(R.drawable.ic_yellowcake);
+                    break;
+                case "Nutella Pie":
+                    binding.recipeIv.setBackgroundResource(R.drawable.ic_nutella_pie);
+                    break;
+                case "Cheesecake":
+                    binding.recipeIv.setBackgroundResource(R.drawable.ic_cheesecake);
+                    break;
+                default:
+                    binding.recipeIv.setBackgroundResource(R.drawable.ic_cheesecake);
+            }
             binding.setRecipe(recipe);
             binding.executePendingBindings();
         }
