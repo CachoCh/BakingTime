@@ -48,14 +48,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public IngredientViewHolder(final IngredientRowItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            this.binding.ingredientCv.setOnClickListener(new View.OnClickListener() {
+            this.binding.clickableframeFl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(!mSelected){
-                        view.setBackgroundColor(Color.LTGRAY);
+                        view.setBackgroundResource(R.color.primaryDarkColor);
                         mSelected = true;
                     } else {
-                        view.setBackgroundColor(Color.WHITE);
+                        view.setBackgroundResource(R.color.appBackgroundColor);
                         mSelected = false;
                     }
                 }
