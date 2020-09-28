@@ -40,6 +40,7 @@
                 android:layout_marginRight="20dp"
                 android:text='@{step.description}'
                 android:textSize="24sp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".45"
@@ -48,21 +49,23 @@
 
             <Button
                 android:id="@+id/previousStep_bt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Previous Step"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/nextStep_bt"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/instructions_tv"/>
+                app:layout_constraintTop_toBottomOf="@+id/instructions_tv" />
 
             <Button
                 android:id="@+id/nextStep_bt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Next Step"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/instructions_tv"/>
+                app:layout_constraintStart_toEndOf="@+id/previousStep_bt"
+                app:layout_constraintTop_toBottomOf="@+id/instructions_tv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
