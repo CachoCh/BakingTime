@@ -2,7 +2,9 @@ package com.cacho.bakingtime;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +36,8 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import androidx.core.view.GestureDetectorCompat;
+import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -42,7 +46,7 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class StepDetailFragment extends Fragment {
-    private List<Recipe.Steps>  mSteps;
+    private List<Recipe.Steps> mSteps;
     private FragmentStepDetailBinding mBinding; //comes from fragment_step_detail.xml
 
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
@@ -63,7 +67,10 @@ public class StepDetailFragment extends Fragment {
     private String mParam1;
     private Integer mStepIndex;
 
-   // private FragmentS binding; //auto generated binding class from recipe_row_item.xml
+    private static final int SWIPE_THRESHOLD = 100;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+    // private FragmentS binding; //auto generated binding class from recipe_row_item.xml
 
     public StepDetailFragment() {
         // Required empty public constructor
@@ -93,10 +100,11 @@ public class StepDetailFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mStepIndex = getArguments().getInt(ARG_PARAM2);
-            Type listType = new TypeToken<List<Recipe.Steps>>() {}.getType();
+            Type listType = new TypeToken<List<Recipe.Steps>>() {
+            }.getType();
             try {
                 mSteps = new Gson().fromJson(mParam1, listType);
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -114,6 +122,40 @@ public class StepDetailFragment extends Fragment {
         setupOnClickListeners();
         setButtonsVisibility();
 
+        final GestureDetector gesture = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                final int SWIPE_MIN_DISTANCE = 120;
+                final int SWIPE_MAX_OFF_PATH = 250;
+                final int SWIPE_THRESHOLD_VELOCITY = 200;
+                try {
+                    if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                        return false;
+                    if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                            && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        moveStep(true);
+                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                            && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        moveStep(false);
+                    }
+                } catch (Exception e) {
+                    // nothing
+                }
+                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+        });
+
+        mBinding.getRoot().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gesture.onTouchEvent(event);
+            }
+        });
         return mBinding.getRoot();
     }
 
@@ -139,7 +181,7 @@ public class StepDetailFragment extends Fragment {
         if (!mBinding.getStep().getVideoURL().isEmpty()) {
             MediaSource mediaSource = buildMediaSource(Uri.parse(mBinding.getStep().getVideoURL()));
             mPlayer.prepare(mediaSource, true, false);
-        } else{
+        } else {
             mPlayer.stop(true);
         }
     }
@@ -167,18 +209,14 @@ public class StepDetailFragment extends Fragment {
      * needs to be this way because of the fragment
      */
     private void setupOnClickListeners() {
-        mBinding.nextStepBt.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        mBinding.nextStepBt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 moveStep(v);
             }
         });
 
-        mBinding.previousStepBt.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        mBinding.previousStepBt.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 moveStep(v);
             }
         });
@@ -186,7 +224,10 @@ public class StepDetailFragment extends Fragment {
 
     public void moveStep(@NotNull View view) {
         boolean isNextStep = view.getId() == mBinding.nextStepBt.getId();
+        moveStep(isNextStep);
+    }
 
+    private void moveStep(boolean isNextStep) {
         if (isNextStep && (mStepIndex < mSteps.size())) {
             mStepIndex++;
         } else if (mStepIndex > 0) {
@@ -196,16 +237,15 @@ public class StepDetailFragment extends Fragment {
         mBinding.setStep(mSteps.get(mStepIndex));
         setupPlayer();
         mBinding.notifyChange();
-
     }
 
-    private void setButtonsVisibility(){
+    private void setButtonsVisibility() {
         if (mStepIndex <= 0) {
             mBinding.previousStepBt.setText(R.string.ingredients);
-            if(mStepIndex == 0){
+            if (mStepIndex == 0) {
                 mBinding.previousStepBt.setVisibility(View.INVISIBLE);
             }
-        } else if (mStepIndex >=  (mSteps.size() - 1)) {
+        } else if (mStepIndex >= (mSteps.size() - 1)) {
             mBinding.nextStepBt.setVisibility(View.INVISIBLE);
         } else {
             mBinding.nextStepBt.setVisibility(View.VISIBLE);
@@ -248,8 +288,6 @@ public class StepDetailFragment extends Fragment {
     }*/
 
 
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -276,4 +314,6 @@ public class StepDetailFragment extends Fragment {
             mPlayer = null;
         }
     }
+
+
 }
