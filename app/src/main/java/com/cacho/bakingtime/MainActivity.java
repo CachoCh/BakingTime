@@ -1,6 +1,7 @@
 package com.cacho.bakingtime;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements OnTaskDoneListene
 
         mRecipeRecyclerView = (RecyclerView) findViewById(R.id.recipe_rv);
         mRecipeRecyclerView.setHasFixedSize(true);
-        mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecipeRecyclerView.setLayoutManager(new GridLayoutManager(this ,2));
+
 
         getRecipes();
     }
