@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction ;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,11 +19,23 @@ public class RecipeInstructionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipes);
 
         Gson gson = new Gson();
         String strObj = getIntent().getStringExtra("recipeObject");
         mRecipe = gson.fromJson(strObj, Recipe.class);
+
+        Configuration config = getResources().getConfiguration();
+
+        if (config.smallestScreenWidthDp >= 600) {
+            setContentView(R.layout.activity_recipes);
+
+            //start with ingredients fragment
+            launchIngredientsFragment(null);
+
+        } else {
+            setContentView(R.layout.activity_recipes);
+        }
+
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment fragment = RecipeInstructionsFragment.newInstance(gson.toJson(mRecipe));
@@ -30,6 +43,13 @@ public class RecipeInstructionsActivity extends AppCompatActivity {
         ft.commit();
 
 
+    }
+
+    public void launchIngredientsFragment(View view){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = IngredientsFragment.newInstance(new Gson().toJson(mRecipe.getIngredients()));
+        ft.replace(R.id.detail_instructions_placeholder, fragment);
+        ft.commit();
     }
 
     public void launchIngredientsActivity (View view){
